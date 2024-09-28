@@ -24,7 +24,7 @@ Before starting the assignment, be sure to complete the following steps:
 5: Push these changes to GitHub or GitLab.
 
 Files
-Download the following files to help you get started:
+6: Download the following files to help you get started:
 
 Module 3 Challenge filesLinks to an external site.
 

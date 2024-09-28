@@ -1,0 +1,54 @@
+import csv
+
+# Path to your CSV file
+csvpath = '/Users/faisaldernawi/Desktop/Training_And_Development/GW_Bootcamp/Homework/Module_3/python-challenge/PyBank/Resources/budget_data.csv'
+
+# Initialize variables
+total_months = 0
+net_total = 0
+changes = []
+previous_profit = None
+greatest_increase = {"date": "", "amount": float('-inf')}
+greatest_decrease = {"date": "", "amount": float('inf')}
+
+# Open and read the CSV file
+with open(csvpath, mode='r') as csvfile:
+    csvreader = csv.reader(csvfile)
+    header = next(csvreader)  # Skip the header row
+
+    # Iterate through each row of the CSV file
+    for row in csvreader:
+        date = row[0]
+        profit_loss = int(row[1])
+
+        # Calculate total number of months and net total of Profit/Losses
+        total_months += 1
+        net_total += profit_loss
+
+        # Calculate the change in profit/loss from the previous month
+        if previous_profit is not None:
+            change = profit_loss - previous_profit
+            changes.append(change)
+
+            # Check for greatest increase in profits
+            if change > greatest_increase["amount"]:
+                greatest_increase = {"date": date, "amount": change}
+
+            # Check for greatest decrease in profits
+            if change < greatest_decrease["amount"]:
+                greatest_decrease = {"date": date, "amount": change}
+
+        # Set the current profit/loss as the previous for the next iteration
+        previous_profit = profit_loss
+
+# Calculate average change in "Profit/Losses"
+average_change = sum(changes) / len(changes)
+
+# Display the results
+print("Financial Analysis")
+print("----------------------------")
+print(f"Total Months: {total_months}")
+print(f"Total: ${net_total}")
+print(f"Average Change: ${average_change:.2f}")
+print(f"Greatest Increase in Profits: {greatest_increase['date']} (${greatest_increase['amount']})")
+print(f"Greatest Decrease in Profits: {greatest_decrease['date']} (${greatest_decrease['amount']})")
